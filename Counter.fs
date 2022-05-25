@@ -5,7 +5,6 @@ module Counter =
     open Avalonia.FuncUI
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
-    open System.Collections.Generic
 
     let view (window: Window) =
 
@@ -13,34 +12,38 @@ module Counter =
             let filePaths = ctx.useState []
 
             let handleClickAsync () =
-                let dialog = OpenFileDialog()
-                dialog.AllowMultiple <- true
+                let dialog =
+                    let filter =
+                        FileDialogFilter(Name = "Markdown Files", Extensions = ResizeArray([ "md" ]))
 
-                let filter =
-                    FileDialogFilter(Extensions = List<string>([ "md" ]), Name = "Markdown Files")
-
-                dialog.Filters.Add(filter)
-                dialog.Title <- "Select Markdown Files"
+                    OpenFileDialog(
+                        AllowMultiple = true,
+                        Filters = ResizeArray([ filter ]),
+                        Title = "Select Markdown Files"
+                    )
 
                 async {
                     let! files = dialog.ShowAsync window |> Async.AwaitTask
                     files |> Seq.toList |> filePaths.Set
                 }
+                |> Async.Start
 
             let handleClickTask () =
-                let dialog = OpenFileDialog()
-                dialog.AllowMultiple <- true
+                let dialog =
+                    let filter =
+                        FileDialogFilter(Name = "Markdown Files", Extensions = ResizeArray([ "md" ]))
 
-                let filter =
-                    FileDialogFilter(Extensions = List<string>([ "md" ]), Name = "Markdown Files")
-
-                dialog.Filters.Add(filter)
-                dialog.Title <- "Select Markdown Files"
+                    OpenFileDialog(
+                        AllowMultiple = true,
+                        Filters = ResizeArray([ filter ]),
+                        Title = "Select Markdown Files"
+                    )
 
                 task {
                     let! files = dialog.ShowAsync window
                     files |> Seq.toList |> filePaths.Set
                 }
+                |> ignore
 
             StackPanel.create
                 [
@@ -51,12 +54,12 @@ module Counter =
                             Button.create
                                 [
                                     Button.content "Open Dialog Using Async"
-                                    Button.onClick (fun _ -> handleClickAsync () |> Async.Start)
+                                    Button.onClick (fun _ -> handleClickAsync ())
                                 ]
                             Button.create
                                 [
                                     Button.content "Open Dialog Using Task"
-                                    Button.onClick (fun _ -> handleClickTask () |> ignore)
+                                    Button.onClick (fun _ -> handleClickTask ())
                                 ]
                             for file in filePaths.Current do
                                 TextBlock.create [ TextBlock.text file ]
