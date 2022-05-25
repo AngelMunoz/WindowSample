@@ -9,7 +9,7 @@ module Counter =
     let view (window: Window) =
 
         Component(fun ctx ->
-            let filePaths = ctx.useState []
+            let filePaths = ctx.useState [||]
 
             let handleClickAsync () =
                 let dialog =
@@ -24,7 +24,7 @@ module Counter =
 
                 async {
                     let! files = dialog.ShowAsync window |> Async.AwaitTask
-                    files |> Seq.toList |> filePaths.Set
+                    filePaths.Set files
                 }
                 |> Async.Start
 
@@ -41,7 +41,7 @@ module Counter =
 
                 task {
                     let! files = dialog.ShowAsync window
-                    files |> Seq.toList |> filePaths.Set
+                    filePaths.Set files
                 }
                 |> ignore
 
