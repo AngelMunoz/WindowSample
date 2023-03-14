@@ -35,6 +35,8 @@ module Counter =
             let nameAndPath =
                 filePaths
                 // writable values can be used as the source of information to perform transformations
+                // once a transformation has been performed on then they will become IReadable
+                // as they will change any time the source IWritable gets updated
                 |> State.readMap mapToNameAndPath
 
             StackPanel.create
