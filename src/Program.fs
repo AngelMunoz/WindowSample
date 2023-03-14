@@ -22,8 +22,7 @@ type MainWindow() as this =
 type App() =
     inherit Application()
 
-    override this.Initialize() =
-        this.Styles.Add(FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
+    override this.Initialize() = this.Styles.Add(FluentTheme())
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
@@ -37,5 +36,4 @@ module Program =
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()
-            .UseSkia()
             .StartWithClassicDesktopLifetime(args)
