@@ -80,9 +80,19 @@ let View state dispatch =
             StackPanel.horizontalAlignment HorizontalAlignment.Center
             StackPanel.children
                 [
-                    Button.create [ Button.content "Increment"; Button.onClick (fun _ -> dispatch Increment) ]
-                    Button.create [ Button.content "Decrement"; Button.onClick (fun _ -> dispatch Decrement) ]
-                    Button.create [ Button.content "Reset"; Button.onClick (fun _ -> dispatch Reset) ]
+                    StackPanel.create
+                        [
+                            StackPanel.spacing 8.
+                            StackPanel.orientation Orientation.Horizontal
+                            StackPanel.children
+                                [
+                                    Button.create
+                                        [ Button.content "Increment"; Button.onClick (fun _ -> dispatch Increment) ]
+                                    Button.create
+                                        [ Button.content "Decrement"; Button.onClick (fun _ -> dispatch Decrement) ]
+                                    Button.create [ Button.content "Reset"; Button.onClick (fun _ -> dispatch Reset) ]
+                                ]
+                        ]
 
                     TextBlock.create [ TextBlock.text $"Count: {state.counter}" ]
 

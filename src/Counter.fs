@@ -42,21 +42,37 @@ module Counter =
 
             StackPanel.create
                 [
+                    StackPanel.orientation Orientation.Horizontal
                     StackPanel.verticalAlignment VerticalAlignment.Center
                     StackPanel.horizontalAlignment HorizontalAlignment.Center
+                    StackPanel.spacing 12.
                     StackPanel.children
                         [
-                            Button.create
+                            StackPanel.create
                                 [
-                                    Button.content "Open Dialog"
-                                    // async work can be performed inline or deferred to another function
-                                    Button.onClick (fun _ -> handleClick (window, filePaths))
+                                    StackPanel.spacing 8.
+                                    StackPanel.children
+                                        [
+                                            TextBlock.create [ TextBlock.text "Component Model" ]
+                                            Button.create
+                                                [
+                                                    Button.content "Open Dialog"
+                                                    // async work can be performed inline or deferred to another function
+                                                    Button.onClick (fun _ -> handleClick (window, filePaths))
+                                                ]
+                                            for file in nameAndPath.Current do
+                                                TextBlock.create [ TextBlock.text file ]
+                                        ]
                                 ]
-                            for file in nameAndPath.Current do
-                                TextBlock.create [ TextBlock.text file ]
-
-                            TextBlock.create [ TextBlock.text "Elmish Component" ]
-                            // Include an existing elmish component into another FuncUI component
-                            ViewBuilder.Create<Elmish.Counter.ElmishComponent>([])
+                            StackPanel.create
+                                [
+                                    StackPanel.spacing 8.
+                                    StackPanel.children
+                                        [
+                                            TextBlock.create [ TextBlock.text "Elmish Model" ]
+                                            // Include an existing elmish component into another FuncUI component
+                                            ViewBuilder.Create<Elmish.Counter.ElmishComponent>([])
+                                        ]
+                                ]
                         ]
                 ])
