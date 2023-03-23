@@ -6,6 +6,7 @@ module Counter =
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
     open Avalonia.Platform.Storage
+    open Avalonia.FuncUI.Builder
 
     // IWritable is generally the store of a value that can be changed
     // by anyone who can call its  "Set" function
@@ -53,5 +54,9 @@ module Counter =
                                 ]
                             for file in nameAndPath.Current do
                                 TextBlock.create [ TextBlock.text file ]
+
+                            TextBlock.create [ TextBlock.text "Elmish Component" ]
+                            // Include an existing elmish component into another FuncUI component
+                            ViewBuilder.Create<Elmish.Counter.ElmishComponent>([])
                         ]
                 ])

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="CounterElmish.fs" />
     <Compile Include="Counter.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
@@ -18,5 +19,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
 
     <PackageReference Include="Avalonia.FuncUI" Version="$(FuncUIVersion)" />
+    <PackageReference Include="Avalonia.FuncUI.Elmish" Version="$(FuncUIVersion)" />
+    <PackageReference Include="Elmish" Version="4.0.1" />
   </ItemGroup>
 </Project>
